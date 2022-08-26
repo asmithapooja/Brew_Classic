@@ -1,0 +1,47 @@
+{
+          data.map((item,key) => {
+            return(
+              <Modals dishname = {item.dishName} quantity = {item.quantity} time = {item.time} userdishid = {item._id}   />
+            )
+          })
+        }
+
+
+
+<Modal.Header closeButton>
+            <Modal.Title> Check your orders </Modal.Title>
+          </Modal.Header>
+        <Modal.Body>
+        <div className='row'>
+          <div className="col">
+            <p>
+              {props.dishname}
+            </p>
+          </div>
+          <div className="col">
+            <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name={quantity} value={quantity} onChange={((e) => setQuantity(e.target.value))} readwrite />
+          </div>
+          <div className="col">
+            <p>
+              {props.time}
+            </p>
+          </div>
+          <div className="col">
+            <div className='row'>
+              <div className='col-2'>
+                <i class="bi bi-bag-x-fill" onClick={() => deleteDish(props.userdishid)}></i>
+              </div>
+              <div className="col-2">
+                <i class="bi bi-bag-check-fill" onClick={() => editData(props.userdishid)}></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal.Body>
+        <Modal.Footer>
+            <div className = "row">
+                <Button variant="outline-secondary" onClick={handleShow}>
+                    Save & Close
+                </Button>
+            </div>
+          </Modal.Footer>
