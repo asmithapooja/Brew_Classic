@@ -99,7 +99,7 @@ const GlobalBar = (props) => {
                     </div>
                     <div class="card-body">
                         <p style={{ color: "black" }}>STOCK: {
-                            props.engaged == "true" ? (
+                            props.engaged == "In Stock" ? (
                                 "In Stock"
                             ) : (
                                 "Oops, sorry!"
@@ -109,7 +109,7 @@ const GlobalBar = (props) => {
                         <p style={{ color: "black" }}>  {props.roomtype}</p>
                     </div>
                     {
-                        (props.engaged == "true" ? (
+                        (props.engaged == "In Stock" ? (
                             <div className="btn btn-info" onClick={handleShow}>
                                 ADD ORDER
                             </div>

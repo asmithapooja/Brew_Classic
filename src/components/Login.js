@@ -1,45 +1,62 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import {Link, useParams} from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import {link, useNavigate} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Variables from './Variables';
 
 
 const Login = () => {
 
-    const {id} = useParams();
+    let navigate = useNavigate();
+
+    const { id } = useParams();
 
     const splitedIds = id.split(/[-]/);
 
 
     const [phonenumber, setPhonenumber] = useState();
- 
+
     const [lodgedata, setLodgedata] = useState();
+
+    const [show, setShow] = useState(false);
+
+    const [alert, setAlert] = useState("");
+
+    const handleClose = () => {
+        setShow(!show);
+    }
 
     const getData = () => {
         const credentials = {
-            lodgeId : splitedIds[0]
+            lodgeId: splitedIds[0]
         }
         axios.post(`${Variables.dishLodge}findlodge`, credentials)
-        .then(data => {
-            console.log(data.data);
-            setLodgedata(data.data.username)
-        })
+            .then(data => {
+                console.log(data.data);
+                setLodgedata(data.data.username)
+            })
     }
 
     const processData = (e) => {
         e.preventDefault();
         const credentials = {
-            phonenumber : phonenumber
+            phonenumber: phonenumber
         }
-        if(phonenumber.length <= 0){
-            alert("Please enter your phonenumber!")
+        if (phonenumber.length <= 0) {
+            setShow(!show);
+            setAlert("Please enter your phone number!")
         } else {
-            axios.post(`${Variables.host}checkuser`,credentials)
-            .then(res => {if(res.data == false){
-                alert("User not found")
-            }else {
-                window.location = `/${id}/drinks`
-            }})
+            axios.post(`${Variables.host}checkuser`, credentials)
+                .then(res => {
+                   if(res.data.success){
+                    localStorage.setItem("token", res.data.token);
+                    navigate(`/${id}/drinks`, {replace : true})
+                   } else {
+                    setShow(!show);
+                    setAlert(res.data.message)
+                   }
+                })
         }
     }
 
@@ -49,10 +66,10 @@ const Login = () => {
 
     return (
         <div>
-            <div className = "heading-div">
+            <div className="heading-div">
                 <div className='heading-div2 text-center'>
-                    <h3 className = "container heading">
-                       {lodgedata}'s Inn!'
+                    <h3 className="container heading">
+                        {lodgedata}'s Inn!'
                     </h3>
                 </div>
             </div>
@@ -62,21 +79,27 @@ const Login = () => {
                         <div className="form-group">
                             <label for="exampleInputEmail1">Phone Number</label>
                             <br />
-                            <input type="number" className="form-control form-control-inline" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number" name = {phonenumber} value = {phonenumber} onChange = {((e) => setPhonenumber(e.target.value))} />
+                            <input type="number" className="form-control form-control-inline" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number" name={phonenumber} value={phonenumber} onChange={((e) => setPhonenumber(e.target.value))} />
                             <br />
                             <small id="emailHelp" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
                         </div>
-                        <div className = "submitButton text-center">
+                        <div className="submitButton text-center">
                             <button type="submit" class="btn btn-outline-primary">Submit</button>
                             <br />
                             <br />
-                            <Link to = {`/${id}/signin`}  className = "btn btn-outline-success"> Signin </Link>
+                            <Link to={`/${id}/signin`} className="btn btn-outline-success"> Signin </Link>
                             <br />
                             <br />
                             <button type="button" class="btn btn-outline-secondary"> Learn how to use it</button>
                         </div>
                     </form>
                 </div>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Invalid Credentials!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Error : User not found</Modal.Body>
+                </Modal>
             </div>
         </div>
     )

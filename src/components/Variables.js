@@ -2,8 +2,9 @@
 
 const Variables = {
     host : "http://localhost:3002/",
-    dishLodge : "http://localhost:3002/62ca6d085c7d23c5fb3a16b5/",
-    id : "12345678"
+    dishLodge : "http://localhost:3002/632378fcf3b92aed0d106d54/",
+    id : "12345678",
+    login : "localhost:3000/632378fcf3b92aed0d106d54-63237959f3b92aed0d106d61/login"
 }
 
 export default Variables;

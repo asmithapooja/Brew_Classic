@@ -34,9 +34,12 @@ const Footer = () => {
       roomId: splitedIds[1]
     }
     axios.post(`${Variables.dishLodge}userdishes`, credentials)
-      .then(data => {
-        console.log(data.data);
-        setData(data.data)
+      .then(res => {
+        if(res.data.success){
+          setData(res.data.message);
+        } else {
+          alert(res.data.message)
+        }
       })
   }
 
