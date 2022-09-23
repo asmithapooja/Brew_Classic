@@ -29,13 +29,15 @@ const GlobalBar = (props) => {
 
 
     const addDish = () => {
+        console.log(splitedIds[0]);
         const credentials = {
             roomid: splitedIds[1],
             roomno : props.roomno,
             dishname: props.dishname,
             quantity: quantity,
             comments: comments,
-            time: current.toUTCString()
+            time: current.toUTCString(),
+            lodgeid : splitedIds[0]
         }
         axios.post(`${Variables.dishLodge}adddishroom`, credentials)
             .then(res => {
