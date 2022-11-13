@@ -31,7 +31,7 @@ const Login = () => {
         const credentials = {
             lodgeId: splitedIds[0]
         }
-        axios.post(`${Variables.dishLodge}findlodge`, credentials)
+        axios.post(`${Variables.host}/${splitedIds[0]}/findlodge`, credentials)
             .then(data => {
                 console.log(data.data);
                 setLodgedata(data.data.username)
@@ -41,17 +41,19 @@ const Login = () => {
     const processData = (e) => {
         e.preventDefault();
         const credentials = {
-            phonenumber: phonenumber
+            phonenumber: phonenumber,
+            secondphonenumber : phonenumber
         }
         if (phonenumber.length <= 0) {
             setShow(!show);
             setAlert("Please enter your phone number!")
         } else {
-            axios.post(`${Variables.host}checkuser`, credentials)
+            console.log(credentials);
+            axios.post(`${Variables.host}/${splitedIds[1]}/checkuser`, credentials)
                 .then(res => {
                    if(res.data.success){
                     localStorage.setItem("token", res.data.token);
-                    navigate(`/${id}/drinks`, {replace : true})
+                    navigate(`/${id}/static`, {replace : true})
                    } else {
                     setShow(!show);
                     setAlert(res.data.message)

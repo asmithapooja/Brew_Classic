@@ -149,3 +149,14 @@
 .alertbox{
   padding-top: 5px;
 }
+
+ul{
+  display : table;
+  list-style : none;
+  padding : 0;
+}
+
+ul li{
+  display: inline-block;
+  padding : 5px;
+}

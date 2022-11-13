@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import changeScreen from './Action.js';
 import CustomError from './CustomError';
+import Pagination from './Navbar-Pagination/src/Pagination';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import Variables from './Variables';
@@ -24,20 +25,20 @@ const Drinks = () => {
     const [roomno, setRoomno] = useState();
 
     const getData = () => {
-        console.log(Variables.dishLodge);
         const roomid = {
             roomid: splitedIds[1]
         }
         const categeory = {
             type: "Drinks"
         }
-        axios.post(`${Variables.dishLodge}dishvaries`, categeory)
+        //console.log(`${Variables.host}/${splitedIds}/roombyid`)
+        axios.post(`${Variables.host}/${splitedIds[0]}/dishvaries`, categeory)
             .then(data => {
                 setDishdata(data.data)
             })
-        axios.post(`${Variables.dishLodge}roombyid`, roomid)
+        axios.post(`${Variables.host}/${splitedIds}/roombyid`, roomid)
             .then(data => {
-                console.log(data.data);
+                console.log("Room no" ,data.data);
                 setRoomno(data.data);
             })
     }
@@ -84,22 +85,10 @@ const Drinks = () => {
 
                         <div className="content-wrapper">
                             <div className='container'>
-                                <Navbar roomno={roomno} />
-                                <div className='tabs'>
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <Link className="nav-link highlight" to={`/${id}/drinks`}> Drinks </Link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <Link className='nav-link' to={`/${id}/nonveg`}> Non-Veg </Link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <Link className='nav-link' to={`/${id}/veg`}> Veg </Link>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <Navbar roomno={roomno} id = {id} />
+                                <Pagination />
                                 <div>
-                                    <p className='topic'>
+                                    <p className='topic text-center'>
                                         Cold and Beverages
                                     </p>
                                 </div>

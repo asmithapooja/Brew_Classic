@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import changeScreen from './Action.js';
 import CustomError from './CustomError';
+import Pagination from './Navbar-Pagination/src/Pagination';
 import axios from "axios";
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -29,12 +30,12 @@ const NonVeg = () => {
         const categeory = {
             type: "Non-Veg"
         }
-        axios.post(`${Variables.dishLodge}dishvaries`, categeory)
+        axios.post(`${Variables.host}/${splitedIds[0]}/dishvaries`, categeory)
             .then(data => {
                 setDishdata(data.data);
                 console.log(dishdata.length);
             })
-        axios.post(`${Variables.dishLodge}roombyid`, roomid)
+        axios.post(`${Variables.host}/${splitedIds}/roombyid`, roomid)
             .then(data => {
                 console.log(data.data);
                 setRoomno(data.data);
@@ -83,21 +84,9 @@ const NonVeg = () => {
                         <div className="content-wrapper">
                             <div className='container'>
                                 <Navbar roomno={roomno} />
-                                <div className='tabs'>
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <Link className="nav-link" to={`/${id}/drinks`}> Drinks </Link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <Link className='nav-link highlight' to={`/${id}/nonveg`}> Non-Veg </Link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <Link className='nav-link' to={`/${id}/veg`}> Veg </Link>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <Pagination />
                                 <div>
-                                    <p className='topic'>
+                                    <p className='topic text-center'>
                                         Non-Veg Dishes
                                     </p>
                                 </div>
