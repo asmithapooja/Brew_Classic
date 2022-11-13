@@ -2,6 +2,7 @@ import './App.css';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Login from './components/Login';
 import Signin from './components/Signin';
+import Static from './components/Static/source/Static';
 import Drinks from './components/Drinks';
 import NonVeg from './components/NonVeg';
 import Veg from './components/Veg';
@@ -20,12 +21,8 @@ function App() {
           <Routes>
             <Route path = "/:id/login" exact element = {<Login />} />
             <Route path = "/:id/signin" exact element = {<Signin />} />
-            <Route path = "/:id/drinks" exact element = {<Drinks />} />
-            <Route path = "/:id/nonveg" exact element = {<NonVeg />} />
-            <Route path = "/:id/veg" exact element = {<Veg />} />
-            <Route path = "/:id/services" exact element = {<Service />} />
-            <Route path = "/:id/callawaiter" exact element = {<CallWaiter />} />
-          </Routes>
+           <Route path = "/:id/static" exact element  = {<Static />} />
+           </Routes>
         </Router>
     </div>
   );
