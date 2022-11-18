@@ -101,11 +101,17 @@ const Footer = (props) => {
             </div>
           </Modal.Body>
           {
+           data.length == 0 ? (
+            <div className='text-center'>
+              You have no order in the preparation yet...
+            </div>
+           ) : (
             data.map((item, key) => {
               return (
                 <Modals dishname={item.dishName} quantity={item.quantity} time={item.time} userdishid={item._id} ackbox={setAckbox} alertbox={setAlertbox} roomId = {props.roomId} />
               )
             })
+           )
           }
           <Modal.Footer>
             <div className="row">

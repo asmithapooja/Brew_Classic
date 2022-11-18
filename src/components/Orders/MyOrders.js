@@ -33,6 +33,7 @@ const MyOrders = () => {
                .then(res => {
                     setData(res.data.message);
                     setLoading(false);
+                    console.log(res.data.message);
                })
                .catch(err => {
                     // Make the modal for the rest failure!
@@ -86,11 +87,17 @@ const MyOrders = () => {
                                    </div>
                                    <div className="myOrders-Space">
                                         {
-                                             data.map((item, key) => {
-                                                  return (
-                                                       <Order dishname={item.dishName} delivered={item.delivered} quantity={item.quantity} timeOfOrder={item.time} />
-                                                  )
-                                             })
+                                             data.length == 0 ? (
+                                                 <div className = "align-down topic text-center">
+                                                       No orders in your menu list...
+                                                  </div>
+                                             ) : (
+                                                  data.map((item, key) => {
+                                                       return (
+                                                            <Order dishname={item.dishName} delivered={item.delivered} quantity={item.quantity} timeOfOrder={item.time} />
+                                                       )
+                                                  })
+                                             )
                                         }
                                    </div>
                                    <Footer lodgeId={splitedIds[0]} roomId={splitedIds[1]} />
