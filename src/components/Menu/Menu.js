@@ -1,119 +1,68 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom';
-import changeScreen from './Action.js';
-import CustomError from './CustomError';
-import Pagination from './Navbar-Pagination/src/Pagination';
-import Footer from './Footer';
-import Navbar from './Navbar';
-import Variables from './Variables';
+import Loading from '../LoadingScreen/Loading';
+import Footer from '../Footer/Footer';
+import Variables from '../Variables';
 import axios from 'axios';
-import GlobalBar from './Global';
+import GlobalBar from './src/Global';
 
-
-const Menu = () => {
-
-    const { id } = useParams();
-
-    const splitedIds = id.split(/[-]/);
-
-    const token = localStorage.getItem("token");
-
-    console.log(splitedIds);
+const Menu = (props) => {
 
     const [dishdata, setDishdata] = useState([]);
 
-    const [roomno, setRoomno] = useState();
+    // Loader
+    const [loading, setLoading] = useState(false);
 
     const getData = () => {
-        const roomid = {
-            roomid: splitedIds[1]
-        }
+        setLoading(true);
         const categeory = {
-            type: "Drinks"
+            type: props.type
         }
         //console.log(`${Variables.host}/${splitedIds}/roombyid`)
-        axios.post(`${Variables.host}/${splitedIds[0]}/dishvaries`, categeory)
+        axios.post(`${Variables.host}/${props.lodgeId}/dishvaries`, categeory)
             .then(data => {
-                setDishdata(data.data)
-            })
-        axios.post(`${Variables.host}/${splitedIds}/roombyid`, roomid)
-            .then(data => {
-                console.log("Room no" ,data.data);
-                setRoomno(data.data);
+                setDishdata(data.data);
+                setLoading(false);
             })
     }
 
     useEffect(() => {
         getData();
-    }, [])
-
-    const parseJwt = (token) => {
-        try {
-          return JSON.parse(atob(token.split(".")[1]));
-        } catch (e) {
-          return null;
-        }
-      };
-
-    const AuthVerify = () => {
-          const user = localStorage.getItem("token");
-      
-          if (user) {
-            const decodedJwt = parseJwt(user);
-      
-            if (decodedJwt.exp * 1000 < Date.now()) {
-              localStorage.clear();
-              changeScreen(id);
-            }
-          }
-    }
-
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            AuthVerify();
-        }, 9000)
-        return () => clearInterval(interval)
-    }, [])
-
+    }, [props.type])
 
     return (
         <div>
             {
-                token ? (
-                    <div className='page-container'>
-
-                        <div className="content-wrapper">
-                            <div className='container'>
-                                <Navbar roomno={roomno} id = {id} />
-                                <Pagination />
-                                <div>
-                                    <p className='topic text-center'>
-                                        Cold and Beverages
-                                    </p>
-                                </div>
-                                {
-                                    dishdata.length == 0 ? (
-                                        <div className='stock text-center'>
-                                            No items in the list
-                                        </div>
-                                    ) : (
-                                        dishdata.map((item, key) => {
-                                            return (
-                                                <GlobalBar key={key.key} dishname={item.dishName} dishrate={item.dishRate} dishtype={item.dishType} dishid={item._id} engaged={item.available} roomno={roomno} />
-                                            )
-                                        })
-                                    )
-                                }
-                            </div>
-                        </div>
-                        <Footer />
-                    </div>
+                loading ? (
+                    <Loading alignOperator = {"top-align-nav-present"} />
                 ) : (
-                    <CustomError id = {id}/>
+                    <div>
+                        <div>
+                        <p className='topic text-center'>
+                            {props.type}
+                        </p>
+                         </div>
+                        <div className = "global-modal-space">
+                                {
+                                dishdata.length == 0 ? (
+                                    <div className='stock text-center'>
+                                        No items in the list
+                                    </div>
+                                ) : (
+                                    dishdata.map((item, key) => {
+                                        return (
+                                            <GlobalBar key={key.key} dishname={item.dishName} dishrate={item.dishRate} dishtype={item.dishType} dishid={item._id} engaged={item.available} lodgeId = {props.lodgeId} roomId = {props.roomId} roomno = {props.roomno} />
+                                        )
+                                    })
+                                )
+                            }
+                        </div>
+                        <Footer lodgeId = {props.lodgeId} roomId = {props.roomId} />
+                    </div>    
                 )
-            }
+           }
         </div>
+
+
     )
 }
 

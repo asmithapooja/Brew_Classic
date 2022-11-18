@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, {useEffect} from 'react'
-import changeScreen from './Action.js';
-import Navbar from './Navbar';
-import CustomError from './CustomError';
-import Variables from './Variables';
+import changeScreen from '../Action.js';
+import Navbar from '../Navbar/Navbar.js';
+import CustomError from '../CustomError.js';
+import Variables from '../Variables.js';
 import { Link, useParams } from "react-router-dom";
 
-export const CallWaiter = () => {
+const CallWaiter = () => {
 
     const { id } = useParams();
 
@@ -69,19 +69,9 @@ export const CallWaiter = () => {
             {
                 token ? (
                     <div>
-                        <Navbar />
-                        <div className='container text-center serviceBox'>
-                            <p className='topic'>
-                                Call A Waiter
-                            </p>
-                            <small>
-                                You can expect services from the Waiter within 10 mins of calling a waiter!
-                            </small>
-                            <div className="smallText">
-                                <button type="button" className="btn btn-outline-primary" onClick={processData}>
-                                    Call A Waiter
-                                </button>
-                            </div>
+                        <Navbar id={id} lodgeId = {splitedIds[0]} roomId = {splitedIds[1]} />
+                        <div className = "container">
+                            Still in development
                         </div>
                     </div>
                 ) : (
@@ -91,3 +81,5 @@ export const CallWaiter = () => {
         </div>
     )
 }
+
+export default CallWaiter;
