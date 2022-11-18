@@ -1,47 +1,56 @@
-{
-          data.map((item,key) => {
-            return(
-              <Modals dishname = {item.dishName} quantity = {item.quantity} time = {item.time} userdishid = {item._id}   />
-            )
-          })
-        }
-
-
-
-<Modal.Header closeButton>
-            <Modal.Title> Check your orders </Modal.Title>
+ <div className="footer">
+      <div className='container'>
+        <Modal show={show} onHide={handleShow}>
+          <Modal.Header closeButton>
+            <Modal.Title> Check Your Orders</Modal.Title>
           </Modal.Header>
-        <Modal.Body>
-        <div className='row'>
-          <div className="col">
-            <p>
-              {props.dishname}
-            </p>
-          </div>
-          <div className="col">
-            <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name={quantity} value={quantity} onChange={((e) => setQuantity(e.target.value))} readwrite />
-          </div>
-          <div className="col">
-            <p>
-              {props.time}
-            </p>
-          </div>
-          <div className="col">
-            <div className='row'>
-              <div className='col-2'>
-                <i class="bi bi-bag-x-fill" onClick={() => deleteDish(props.userdishid)}></i>
-              </div>
-              <div className="col-2">
-                <i class="bi bi-bag-check-fill" onClick={() => editData(props.userdishid)}></i>
-              </div>
+          <Modal.Body>
+            <div className="alertbox">
+              {
+                ackbox ? (
+
+                  <Alert show={ackbox}>
+                    <div className="container text-center">
+                      Order has been removed from your list
+                    </div>
+                  </Alert>
+                ) : (
+                  <div>
+                  </div>
+                )
+              }
+              {
+                alertbox ? (
+
+                  <Alert show={alertbox}>
+                    <div className="container text-center">
+                      Order has been modified..
+                    </div>
+                  </Alert>
+                ) : (
+                  <div>
+                  </div>
+                )
+              }
             </div>
-          </div>
-        </div>
-      </Modal.Body>
-        <Modal.Footer>
-            <div className = "row">
-                <Button variant="outline-secondary" onClick={handleShow}>
-                    Save & Close
-                </Button>
+          </Modal.Body>
+          {
+            data.map((item, key) => {
+              return (
+                <Modals dishname={item.dishName} quantity={item.quantity} time={item.time} userdishid={item._id} ackbox={setAckbox} alertbox={setAlertbox} />
+              )
+            })
+          }
+          <Modal.Footer>
+            <div className="row">
+              <Button variant="outline-secondary" onClick={handleShow}>
+                Save & Close
+              </Button>
             </div>
           </Modal.Footer>
+        </Modal>
+        <div  className='btn btn-outline-info' onClick={() => handleShow()}>
+          Edit/Check your orders!
+        </div>
+      </div>
+    </div>

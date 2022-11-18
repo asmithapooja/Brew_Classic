@@ -4,36 +4,29 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Variables from './Variables';
-import Modals from './Modals';
+import Variables from '../Variables';
+import Modals from '../Menu_Modal/Modals';
 
-
-const Footer = () => {
+const Footer = (props) => {
 
   const [show, setShow] = useState(false);
   const [ackbox, setAckbox] = useState(false);
   const [alertbox, setAlertbox] = useState(false);
 
-  const { id } = useParams();
-
-  const splitedIds = id.split(/[-]/);
-
   const [data, setData] = useState([]);
 
 
   const handleShow = () => {
-    console.log(show);
     setShow(!show);
-    console.log(show)
   }
 
 
   const getData = () => {
 
     const credentials = {
-      roomId: splitedIds[1]
+      roomId: props.roomId
     }
-    axios.post(`${Variables.dishLodge}userdishes`, credentials)
+    axios.post(`${Variables.host}/${props.roomId}/checkdeliveredroom`, credentials)
       .then(res => {
         if(res.data.success){
           setData(res.data.message);
@@ -70,7 +63,8 @@ const Footer = () => {
 
 
   return (
-    <div className="main-footer text-center">
+    <div className = "container">
+    <div className="footer btn btn-success">
       <div className='container'>
         <Modal show={show} onHide={handleShow}>
           <Modal.Header closeButton>
@@ -121,10 +115,11 @@ const Footer = () => {
             </div>
           </Modal.Footer>
         </Modal>
-        <button type="button" className='btn btn-outline-info' onClick={() => handleShow()}>
+        <div onClick={() => handleShow()}>
           Edit/Check your orders!
-        </button>
+        </div>
       </div>
+    </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import React from 'react';
+import Menu from "../Menu/Menu";
 
 const NavPagination = (props) => {
 
@@ -10,16 +11,20 @@ const NavPagination = (props) => {
     // Setting the state to the last rendenred data..
     useEffect(() => {
         props.response(props.type)
-    },[])
+    }, [])
 
     return (
-        <li className ="nav-item">
-            <a>
-                <button className = "nav-link highlights" onClick={changeResponse}>
-                    {props.type}
-                </button>
-            </a>
-        </li>
+        <div>
+            <div>
+                <li className="nav-item">
+                    <a>
+                        <button className="nav-link highlights" onClick={changeResponse}>
+                            {props.type}
+                        </button>
+                    </a>
+                </li>
+            </div>
+        </div>
     )
 }
 

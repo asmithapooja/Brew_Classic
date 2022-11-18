@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
-import Variables from './Variables';
+import Variables from '../../Variables';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,24 +22,19 @@ const GlobalBar = (props) => {
 
     const handleShow = () => setShow(!show);
 
-
-    const { id } = useParams();
-
-    const splitedIds = id.split(/[-]/);
-
-
+    // Add dish to the waiter's list
     const addDish = () => {
-        console.log(splitedIds[0]);
         const credentials = {
-            roomid: splitedIds[1],
+            roomid: props.roomId,
             roomno : props.roomno,
             dishname: props.dishname,
             quantity: quantity,
             comments: comments,
             time: current.toUTCString(),
-            lodgeid : splitedIds[0]
+            lodgeid : props.lodgeId
         }
-        axios.post(`${Variables.dishLodge}adddishroom`, credentials)
+        console.log(credentials);
+        axios.post(`${Variables.host}/${props.lodgeId}/adddishroom`, credentials)
             .then(res => {
                 if (res.data.success) {
                     handleShow();
@@ -47,6 +42,9 @@ const GlobalBar = (props) => {
                     console.log(res.data.message)
                     setInvaliddata(true)
                 }
+            })
+            .catch(err => {
+                setInvaliddata("Some internal error occured!");
             })
     }
 
@@ -78,7 +76,7 @@ const GlobalBar = (props) => {
                     <Modal.Title> Customize your order! </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>
+                    <p className = "text-center">
                         {props.dishname.toUpperCase()}
                     </p>
                     <input type="text" className="form-control" placeholder="Enter your dish quantity" name="quantity" value={quantity} onChange={((e) => setQuantity(e.target.value))} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
 import axios from "axios";
-import Variables from './Variables';
+import Variables from '../Variables';
 
 const Modals = (props) => {
 
@@ -42,7 +42,7 @@ const Modals = (props) => {
   return (
     <div className='container'>
       <Modal.Body>
-        <div className='row'>
+          <div className='row'>
           <div className="col">
             <p>
               {props.dishname}

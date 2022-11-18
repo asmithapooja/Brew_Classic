@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import axios from 'axios';
-import Navbar from '../../Navbar';
+import Loading from '../../LoadingScreen/Loading';
+import Navbar from '../../Navbar/Navbar'
 import Variables from '../../Variables';
 import Pagination from '../../Navbar-Pagination/src/Pagination';
 import changeScreen from '../../Action';
 import CustomError from '../../CustomError';
+
+
 const Static = () => {
 
   // Getting the token from the local storage...
   const token = localStorage.getItem("token");
+
+  // Loader
+  const [loading, setLoading] = useState(false);
 
   // Retriving the ID
   const { id } = useParams();
@@ -18,6 +24,7 @@ const Static = () => {
   // Retrieving the room number
   const [roomno, setRoomno] = useState();
   const getRoomNo = () => {
+    setLoading(true);
     const roomid = {
       roomid : splitedIds[1]
     }
@@ -25,6 +32,7 @@ const Static = () => {
     .then(data => {
         console.log("Room no" ,data.data);
         setRoomno(data.data);
+        setLoading(false);
     })
   }
 
@@ -65,13 +73,17 @@ const Static = () => {
   return (
     <div>
       {
-        token ? (
-          <div>
-            <Navbar roomno = {roomno} id={id} />
-            <Pagination />
-          </div>
+        loading ? (
+          <Loading alignOperator = {"top-align"} />
         ) : (
-          <CustomError id={id} />
+          token ? (
+            <div>
+              <Navbar id={id} lodgeId = {splitedIds[0]} roomId = {splitedIds[1]} />
+              <Pagination roomno = {roomno} />
+            </div>
+          ) : (
+            <CustomError id={id} />
+          )
         )
       }
     </div>

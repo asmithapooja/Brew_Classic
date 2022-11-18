@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import Menu from '../../Menu/Menu';
 import Variables from '../../Variables';
 import NavPagination from '../NavPagination';
-import { NavItem } from 'react-bootstrap';
 
 
-const Pagination = () => {
+const Pagination = (props) => {
 
     // useState for the options value
     const [options, setOptions] = useState([]);
@@ -42,20 +42,29 @@ const Pagination = () => {
     }, [])
 
     return (
-        <div>
+        <div className = "container">
             <div className='tabs'>
                 <ul class="nav nav-tabs">
                     {
                         options.map((item,key) =>{
                             return(
-                                <NavPagination id = {id} type = {item.dishType} response = {setResponse}/>
+                                <NavPagination lodgeId = {splitedIds[0]} id = {id} type = {item.dishType} response = {setResponse}/>
                             )
                         })
                     }
                 </ul>
-                <div>
-                    {response}
-                </div>
+            </div>
+            <div>
+                {
+                    response ? (
+                        <div>
+                            <Menu type = {response} lodgeId = {splitedIds[0]} roomId = {splitedIds[1]} roomno = {props.roomno} />
+                        </div>
+                    ) : (
+                        <div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

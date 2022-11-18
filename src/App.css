@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -159,4 +160,31 @@ ul{
 ul li{
   display: inline-block;
   padding : 5px;
+}
+
+.top-align{
+  margin-top: 300px;
+}
+
+.top-align-nav-present{
+  margin-top : 200px;
+}
+
+.topic {
+  margin-top : 10px;
+}
+
+.footer{
+  position : fixed;
+  width : 100%;
+  bottom : 0;
+  left : 0;
+}
+
+.cardBar{
+  padding : 1px;
+}
+
+.myOrders-Space {
+  margin-top : 13px;
 }
