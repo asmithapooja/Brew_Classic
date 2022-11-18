@@ -17,7 +17,7 @@ const Modals = (props) => {
       userDishId: userdishId,
       quantity: quantity
     }
-    axios.post(`${Variables.dishLodge}edituserdish`, credentials)
+    axios.post(`${Variables.host}/edituserdish`, credentials)
       .then(res => {
         if (res.data.success) {
           props.alertbox(true)
@@ -30,7 +30,7 @@ const Modals = (props) => {
     const credentials = {
       userDishId: userdishId
     }
-    axios.post(`${Variables.dishLodge}deletedish`, credentials)
+    axios.post(`${Variables.host}/deletedish`, credentials)
       .then(res => {
         if (res.data.success) {
           props.ackbox(true)
