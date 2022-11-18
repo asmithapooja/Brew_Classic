@@ -103,7 +103,7 @@ const Footer = (props) => {
           {
             data.map((item, key) => {
               return (
-                <Modals dishname={item.dishName} quantity={item.quantity} time={item.time} userdishid={item._id} ackbox={setAckbox} alertbox={setAlertbox} />
+                <Modals dishname={item.dishName} quantity={item.quantity} time={item.time} userdishid={item._id} ackbox={setAckbox} alertbox={setAlertbox} roomId = {props.roomId} />
               )
             })
           }
