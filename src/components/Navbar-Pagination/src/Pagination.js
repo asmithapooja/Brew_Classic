@@ -31,7 +31,7 @@ const Pagination = (props) => {
                 }
             })
             .catch(err => {
-                console.log("Some internal error occured, please check the REST");
+                console.log("Some internal error occured, please check the REST", err);
                 // Make the modal for the alert window
             })
     }

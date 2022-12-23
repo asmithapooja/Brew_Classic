@@ -18,12 +18,16 @@ const Navbar = (props) => {
   const [roomno, setRoomno] = useState();
   const getRoomNo = () => {
     const roomid = {
-      roomid : roomId
+      roomid : roomId,
+      headers : localStorage.getItem("token")
     }
     axios.post(`${Variables.host}/${roomId}/roombyid`, roomid)
-    .then(data => {
-        console.log("Room no" ,data.data);
-        setRoomno(data.data);
+    .then(res => {
+        if(res.data.success){
+            setRoomno(res.data.message);
+        } else {
+            console.log("Some internal error occured")
+        }
     })
   };
 
