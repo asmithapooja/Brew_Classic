@@ -26,13 +26,21 @@ const Static = () => {
   const getRoomNo = () => {
     setLoading(true);
     const roomid = {
-      roomid : splitedIds[1]
+      roomid : splitedIds[1],
+      headers : token
     }
-    axios.post(`${Variables.host}/${splitedIds}/roombyid`, roomid)
-    .then(data => {
-        console.log("Room no" ,data.data);
-        setRoomno(data.data);
-        setLoading(false);
+    axios.post(`${Variables.host}/${splitedIds[1]}/roombyid`,roomid)
+    .then(res => {
+      if(res.data.success){
+        console.log("Room No", res.data.message);
+          setRoomno(res.data.message);
+          setLoading(false);
+      } else {
+        changeScreen(id)
+      }
+    })
+    .catch(err => {
+      console.log("Please check the roombyid route!")
     })
   }
 
