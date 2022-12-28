@@ -94,7 +94,7 @@ const MyOrders = () => {
                                              ) : (
                                                   data.map((item, key) => {
                                                        return (
-                                                            <Order dishname={item.dishName} delivered={item.delivered} quantity={item.quantity} timeOfOrder={item.time} />
+                                                            <Order dishname={item.dishName} delivered={item.delivered} quantity={item.quantity} timeOfOrder={item.time} dishrate = {item.dishRate} />
                                                        )
                                                   })
                                              )
