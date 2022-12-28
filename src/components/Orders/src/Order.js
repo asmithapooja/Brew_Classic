@@ -14,6 +14,9 @@ const Order = (props) => {
                                 Dish Name: {props.dishname}
                             </p>
                             <p style = {{"color" : "black"}}>
+                                Dish Rate: {props.dishrate}
+                            </p>
+                            <p style = {{"color" : "black"}}>
                                 Quantity: {props.quantity}
                             </p>
                             <p style = {{"color" : "black"}}>
