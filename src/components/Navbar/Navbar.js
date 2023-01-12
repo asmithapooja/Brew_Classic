@@ -16,12 +16,12 @@ const Navbar = (props) => {
 
   // Retrieving the room number
   const [roomno, setRoomno] = useState();
-  const getRoomNo = () => {
+  const getRoomNo = async () => {
     const roomid = {
       roomid : roomId,
       headers : localStorage.getItem("token")
     }
-    axios.post(`${Variables.host}/${roomId}/roombyid`, roomid)
+    await axios.post(`${Variables.host}/${roomId}/roombyid`, roomid)
     .then(res => {
         if(res.data.success){
             setRoomno(res.data.message);
@@ -56,7 +56,7 @@ const Navbar = (props) => {
                                 <Link className="nav-link" to={`/${props.id}/myorders`} style={{ color: "white" }} > My Orders </Link>
                             </li>
                             <li className='nav-item active'>
-                                <Link className="nav-link" to={`/${props.id}/callwaiter`} style={{ color: "white" }} > Call a waiter </Link>
+                                <Link className="nav-link" to={`/${props.id}/transport`} style={{ color: "white" }} > Transport </Link>
                             </li>
                             <li className='nav-item active'>
                                 <Link className="nav-link" to={`/${props.id}/static`} style={{ color: "white" }} > Dishes </Link>
