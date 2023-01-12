@@ -188,3 +188,14 @@ ul li{
 .myOrders-Space {
   margin-top : 13px;
 }
+
+.onDuty {
+  border-left: 5px solid green;
+  margin-bottom :5px;
+}
+
+.offDuty{
+  border-left: 5px solid red;
+  margin-bottom: 5px;
+}
+
